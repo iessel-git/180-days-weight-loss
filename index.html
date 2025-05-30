@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>180-Day Weight Loss Plan</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <header class="bg-green-700 text-white p-4 text-center">
+    <h1 class="text-2xl font-bold">180-Day Weight Loss Plan for 52-Year-Old Male</h1>
+    <p class="text-sm">Target: Lose 40 Pounds Safely & Sustainably</p>
+  </header>  <main class="p-4 space-y-6">
+    <section>
+      <h2 class="text-xl font-semibold border-b pb-2">📊 Plan Overview</h2>
+      <ul class="list-disc list-inside">
+        <li>Starting weight: 205 lbs</li>
+        <li>Target weight: 165 lbs</li>
+        <li>Height: 5 ft 5 in</li>
+        <li>Duration: 180 days</li>
+        <li>Caloric Goal: 1,900 kcal/day</li>
+        <li>Exercise: 30–45 mins/day, 5x per week</li>
+      </ul>
+    </section><section>
+  <h2 class="text-xl font-semibold border-b pb-2">📉 Weight Tracker</h2>
+  <form class="space-y-4">
+    <label class="block">
+      <span class="text-gray-700">Enter today's weight (lbs):</span>
+      <input type="number" step="0.1" id="weightInput" class="mt-1 block w-full rounded border-gray-300" />
+    </label>
+    <button type="button" onclick="addWeight()" class="bg-green-600 text-white px-4 py-2 rounded">Add Entry</button>
+  </form>
+  <canvas id="weightChart" class="mt-4"></canvas>
+</section>
+
+<section>
+  <h2 class="text-xl font-semibold border-b pb-2">📅 Interactive Calendar</h2>
+  <div id="calendar" class="grid grid-cols-7 gap-2 text-center text-sm">
+    <!-- Calendar days will be generated here -->
+  </div>
+</section>
+
+<section>
+  <h2 class="text-xl font-semibold border-b pb-2">🥗 Daily Meal Plan</h2>
+  <ul class="list-disc list-inside">
+    <li><strong>Breakfast:</strong> Oatmeal with berries + boiled egg</li>
+    <li><strong>Snack:</strong> Greek yogurt + chia seeds</li>
+    <li><strong>Lunch:</strong> Grilled chicken + brown rice + broccoli</li>
+    <li><strong>Snack:</strong> Apple + almond butter</li>
+    <li><strong>Dinner:</strong> Salmon + quinoa + spinach</li>
+    <li><strong>Evening (Optional):</strong> Cottage cheese + cucumber</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="text-xl font-semibold border-b pb-2">🏋️ Exercise Schedule</h2>
+  <ul class="list-disc list-inside">
+    <li><strong>Mon/Wed/Fri:</strong> 30 min cardio + strength training</li>
+    <li><strong>Tue/Thu:</strong> Brisk walk or cycling 45 min</li>
+    <li><strong>Weekend:</strong> Rest or light yoga/stretching</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="text-xl font-semibold border-b pb-2">🛒 Weekly Grocery List</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <h3 class="font-semibold">Protein</h3>
+      <ul class="list-disc list-inside">
+        <li>Eggs, Chicken breast, Salmon</li>
+        <li>Greek yogurt, Cottage cheese</li>
+        <li>Lean turkey, Tuna, Protein powder</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold">Carbs & Grains</h3>
+      <ul class="list-disc list-inside">
+        <li>Brown rice, Quinoa, Oats</li>
+        <li>Whole grain bread, Sweet potatoes</li>
+        <li>Whole wheat wraps</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold">Vegetables</h3>
+      <ul class="list-disc list-inside">
+        <li>Broccoli, Spinach, Kale</li>
+        <li>Bell peppers, Carrots, Zucchini</li>
+        <li>Onions, Tomatoes, Garlic</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold">Fruits</h3>
+      <ul class="list-disc list-inside">
+        <li>Apples, Berries, Bananas</li>
+        <li>Oranges, Lemons, Avocados</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold">Healthy Fats & Extras</h3>
+      <ul class="list-disc list-inside">
+        <li>Almonds, Chia seeds, Olive oil</li>
+        <li>Nut butter, Apple cider vinegar</li>
+        <li>Herbs, Spices, Green tea</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+  </main>  <footer class="text-center text-sm text-gray-600 p-4 mt-8 border-t">
+    &copy; 2025 Healthy Journey | Built for Sustainable Weight Loss
+  </footer>  <script>
+    const weights = [];
+    const labels = [];
+    const ctx = document.getElementById('weightChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Weight (lbs)',
+          data: weights,
+          borderColor: 'rgba(34,197,94,1)',
+          fill: false,
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: false
+          }
+        }
+      }
+    });
+
+    function addWeight() {
+      const input = document.getElementById('weightInput');
+      const date = new Date().toLocaleDateString();
+      if (input.value) {
+        labels.push(date);
+        weights.push(parseFloat(input.value));
+        chart.update();
+        input.value = '';
+      }
+    }
+
+    function generateCalendar() {
+      const calendar = document.getElementById('calendar');
+      const today = new Date();
+      const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const div = document.createElement('div');
+        div.className = 'bg-white border p-2 rounded shadow-sm';
+        div.innerText = day;
+        calendar.appendChild(div);
+      }
+    }
+
+    generateCalendar();
+  </script></body>
+</html>
